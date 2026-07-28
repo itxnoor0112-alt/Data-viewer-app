@@ -3,7 +3,6 @@ import { initTheme, setupThemeToggle } from './theme.js';
 let products = [];
 const cache = new Map();
 
-// Initialize
 initTheme();
 setupThemeToggle('theme-toggle');
 updateCartCount();
@@ -58,8 +57,8 @@ function renderProducts(list) {
         <a href="product-details.html?id=${p.id}" class="w-1/2 text-center bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2 rounded text-sm">Details</a>
         <button data-id="${p.id}" class="add-btn w-1/2 bg-blue-600 text-white py-2 rounded text-sm hover:bg-blue-700">Add</button>
       </div>
-    </div>
-  `).join('');
+    </div>s
+`).join('');
 
   document.querySelectorAll('.add-btn').forEach(btn => {
     btn.addEventListener('click', (e) => addToCart(parseInt(e.target.dataset.id)));

@@ -28,8 +28,8 @@ function renderCart() {
         </div>
         <button data-id="${item.id}" class="remove-btn text-red-600 hover:underline">Remove</button>
       </div>
-    `;
-  }).join('');
+    ;
+  `}).join('');
 
   totalEl.textContent = total.toFixed(2);
 
