@@ -38,17 +38,31 @@ https://itxnoor0112-alt.github.io/Dynamic-Data-Viewer/
 ## Project Structure
 
 dynamic-data-viewer/
+
 │
+
 ├── index.html
+
 ├── product-details.html
+
 ├── cart.html
+
 ├── about.html
+
 │
+
 ├── css/
+
 │   └── style.css
+
 │
+
 └── js/
+
     ├── theme.js
+
     ├── main.js
+
     ├── details.js
+
     └── cart.js
