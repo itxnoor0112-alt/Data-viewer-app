@@ -32,7 +32,7 @@ async function fetchData() {
 function renderSkeletons(container) {
   container.innerHTML = Array(8).fill(0).map(() => `
     <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow space-y-4">
-      <div class="h-40 skeleton rounded"></div>
+      <div class="h-48 skeleton rounded"></div>
       <div class="h-4 skeleton rounded w-3/4"></div>
       <div class="h-4 skeleton rounded w-1/2"></div>
     </div>
@@ -47,18 +47,26 @@ function renderProducts(list) {
   }
 
   grid.innerHTML = list.map(p => `
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex flex-col justify-between">
-      <img src="${p.image}" class="h-40 object-contain mx-auto mb-4 bg-white p-2 rounded">
-      <div>
-        <h3 class="font-semibold text-md line-clamp-1">${p.title}</h3>
-        <p class="text-blue-600 dark:text-blue-400 font-bold my-2">$${p.price}</p>
+    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border dark:border-gray-700 flex flex-col justify-between w-full">
+      <!-- Image Container (Fixed aspect & full width centering) -->
+      <div class="h-48 w-full flex items-center justify-center p-2 mb-3 bg-white rounded">
+        <img src="${p.image}" alt="${p.title}" class="max-h-full max-w-full object-contain">
       </div>
-      <div class="flex gap-2 mt-2">
-        <a href="product-details.html?id=${p.id}" class="w-1/2 text-center bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2 rounded text-sm">Details</a>
-        <button data-id="${p.id}" class="add-btn w-1/2 bg-blue-600 text-white py-2 rounded text-sm hover:bg-blue-700">Add</button>
+      
+      <!-- Content Area -->
+      <div class="flex-grow flex flex-col justify-between">
+        <div>
+          <h3 class="font-semibold text-sm line-clamp-2 min-h-[2.5rem] text-gray-800 dark:text-gray-100">${p.title}</h3>
+          <p class="text-blue-600 dark:text-blue-400 font-bold text-lg my-2">$${p.price}</p>
+        </div>
+        
+        <div class="flex gap-2 mt-3 pt-2 border-t dark:border-gray-700">
+          <a href="product-details.html?id=${p.id}" class="w-1/2 text-center bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2 rounded text-xs font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition">Details</a>
+          <button data-id="${p.id}" class="add-btn w-1/2 bg-blue-600 text-white py-2 rounded text-xs font-semibold hover:bg-blue-700 transition">Add</button>
+        </div>
       </div>
-    </div>s
-`).join('');
+    </div>
+  `).join('');
 
   document.querySelectorAll('.add-btn').forEach(btn => {
     btn.addEventListener('click', (e) => addToCart(parseInt(e.target.dataset.id)));
@@ -76,7 +84,6 @@ function populateCategories(items) {
   });
 }
 
-// Debounce Implementation for Search
 function debounce(fn, delay = 300) {
   let timer;
   return (...args) => {
