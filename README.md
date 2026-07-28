@@ -6,7 +6,7 @@ Dynamic Data Viewer App is a modern, responsive front-end web application develo
 
 ## Live demo
 
-https://itxnoor0112-alt.github.io/Dynamic-Data-Viewer/
+https://itxnoor0112-alt.github.io/Data-viewer-app/
 
 ## Technologies Used
 
