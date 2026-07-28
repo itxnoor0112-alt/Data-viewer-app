@@ -1,64 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Data Viewer App</title>
-
+  <title>Dynamic Data Viewer - Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
-        darkmode:'class',
-    }
+    tailwind.config = { darkMode: 'class' }
   </script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
-<body class="bg-slate-900 text-white min-h-screen p-6">
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen">
 
-  <div class="max-w-6xl mx-auto">
-   
-    <header class="mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <div class="text-center sm:text-left">
-        <h1 class="text-3xl md:text-4xl font-bold text-indigo-400 mb-2">Product Data Viewer</h1>
-        <p class="text-slate-400">Dynamic UI & Asynchronous JavaScript Project</p>
-      </div>
+  <!-- Navbar -->
+  <nav class="bg-white dark:bg-gray-800 shadow p-4 max-w-6xl mx-auto my-4 rounded-lg flex justify-between items-center">
+    <a href="index.html" class="text-xl font-bold text-blue-600 dark:text-blue-400">DataViewer</a>
+    <div class="flex items-center gap-4">
+      <a href="index.html" class="hover:text-blue-600">Home</a>
+      <a href="cart.html" class="hover:text-blue-600">Cart (<span id="cart-count">0</span>)</a>
+      <a href="about.html" class="hover:text-blue-600">About</a>
+      <button id="theme-toggle" class="p-2 border rounded-lg dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700">🌙/☀️</button>
+    </div>
+  </nav>
 
-     
-      <button id="themeToggle" class="bg-slate-800 border border-slate-700 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
-        <span id="themeIcon">🌙</span> <span id="themeText">Dark Mode</span>
-      </button>
-    </header>
-
-    <div class="flex flex-col md:flex-row gap-4 justify-between mb-8">
-     
-      <div class="relative w-full md:w-1/2">
-        <input 
-          type="text" 
-          id="searchInput" 
-          placeholder="Search products..." 
-          class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-2.5 rounded-lg focus:outline-none focus:border-indigo-500 transition"
-        >
-      </div>
-
-      <select 
-        id="categoryFilter" 
-        class="bg-slate-800 border border-slate-700 text-white px-4 py-2.5 rounded-lg focus:outline-none focus:border-indigo-500 transition"
-      >
+  <!-- Controls (Search & Filter) -->
+  <main class="max-w-6xl mx-auto p-4">
+    <div class="flex flex-col md:flex-row gap-4 mb-6">
+      <input type="text" id="search-input" placeholder="Search products (Debounced)..." class="p-3 border rounded-lg w-full md:w-1/2 dark:bg-gray-800 dark:border-gray-700">
+      <select id="category-filter" class="p-3 border rounded-lg w-full md:w-1/2 dark:bg-gray-800 dark:border-gray-700">
         <option value="all">All Categories</option>
-        <option value="electronics">Electronics</option>
-        <option value="jewelery">Jewelery</option>
-        <option value="men's clothing">Men's clothing</option>
-        <option value="women's clothing">Women's clothing</option>
       </select>
     </div>
 
-    <div id="errorMessage" class="hidden bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg mb-6 text-center"></div>
+    <!-- Product Grid -->
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+  </main>
 
-    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>
