@@ -1,19 +1,15 @@
 import { initTheme, setupThemeToggle } from './theme.js';
-
 initTheme();
 setupThemeToggle('theme-toggle');
-
 function renderCart() {
   const container = document.getElementById('cart-items');
   const totalEl = document.getElementById('cart-total');
   const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-
   if (!cart.length) {
     container.innerHTML = '<p class="py-4 text-gray-500">Your cart is currently empty.</p>';
     totalEl.textContent = '0.00';
     return;
   }
-
   let total = 0;
   container.innerHTML = cart.map(item => {
     total += item.price * item.quantity;
@@ -30,9 +26,7 @@ function renderCart() {
       </div>
     ;
   `}).join('');
-
   totalEl.textContent = total.toFixed(2);
-
   document.querySelectorAll('.remove-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const id = parseInt(e.target.dataset.id);
@@ -42,6 +36,5 @@ function renderCart() {
       renderCart();
     });
   });
-}
-
+}s
 renderCart();

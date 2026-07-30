@@ -1,131 +1,128 @@
-import { initTheme, setupThemeToggle } from './theme.js';
-
+const themeToggleBtn = document.getElementById('theme-toggle');
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.documentElement.classList.add('dark');
+}
 let products = [];
-const cache = new Map();
-
-initTheme();
-setupThemeToggle('theme-toggle');
-updateCartCount();
-fetchData();
-
-async function fetchData() {
-  const grid = document.getElementById('product-grid');
-  renderSkeletons(grid);
-
+const productGrid = document.getElementById('product-grid');
+const searchInput = document.getElementById('search-input');
+const categoryFilter = document.getElementById('category-filter');
+const sortSelect = document.getElementById('sort-select');
+async function fetchProducts() {
+  if (!productGrid) return; 
+  productGrid.innerHTML = `
+    <div class="col-span-full flex justify-center items-center py-16">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <span class="ml-3 text-gray-600 dark:text-gray-300">Loading live data...</span>
+    </div>
+  `;
   try {
-    if (cache.has('products')) {
-      products = cache.get('products');
-    } else {
-      const res = await fetch('https://fakestoreapi.com/products');
-      if (!res.ok) throw new Error('API Request Failed');
-      products = await res.json();
-      cache.set('products', products);
-    }
-
+    const res = await fetch('https://fakestoreapi.com/products');
+    if (!res.ok) throw new Error('Failed to fetch data');    
+    products = await res.json();
     populateCategories(products);
     renderProducts(products);
-  } catch (err) {
-    grid.innerHTML = `<p class="col-span-full text-center text-red-500 font-semibold">Error: ${err.message}</p>`;
+  } catch (error) {
+    productGrid.innerHTML = `
+      <div class="col-span-full text-center py-12 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-200 dark:border-red-800">
+        <p class="text-red-600 dark:text-red-400 font-semibold mb-2">Error loading products!</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Please check your network connection and try again.</p>
+      </div>
+    `;
   }
 }
-
-function renderSkeletons(container) {
-  container.innerHTML = Array(8).fill(0).map(() => `
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow space-y-4">
-      <div class="h-48 skeleton rounded"></div>
-      <div class="h-4 skeleton rounded w-3/4"></div>
-      <div class="h-4 skeleton rounded w-1/2"></div>
-    </div>
-  `).join('');
+function populateCategories(items) {
+  if (!categoryFilter) return;
+  const categories = ['all', ...new Set(items.map(p => p.category))];
+  categoryFilter.innerHTML = categories.map(cat => 
+    `<option value="${cat}">${cat.toUpperCase()}</option>`
+  ).join('');
 }
+function renderProducts(items) {
+  if (!productGrid) return;
 
-function renderProducts(list) {
-  const grid = document.getElementById('product-grid');
-  if (!list.length) {
-    grid.innerHTML = '<p class="col-span-full text-center py-8">No products found matching your search.</p>';
+  if (items.length === 0) {
+    productGrid.innerHTML = `
+      <div class="col-span-full text-center py-16 text-gray-500 dark:text-gray-400">
+        No matching products found. Try adjusting your filters.
+      </div>
+    `;
     return;
   }
-
-  grid.innerHTML = list.map(p => `
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border dark:border-gray-700 flex flex-col justify-between w-full">
-      <!-- Image Container (Fixed aspect & full width centering) -->
-      <div class="h-48 w-full flex items-center justify-center p-2 mb-3 bg-white rounded">
-        <img src="${p.image}" alt="${p.title}" class="max-h-full max-w-full object-contain">
-      </div>
-      
-      <!-- Content Area -->
-      <div class="flex-grow flex flex-col justify-between">
-        <div>
-          <h3 class="font-semibold text-sm line-clamp-2 min-h-[2.5rem] text-gray-800 dark:text-gray-100">${p.title}</h3>
-          <p class="text-blue-600 dark:text-blue-400 font-bold text-lg my-2">$${p.price}</p>
+  productGrid.innerHTML = items.map(product => `
+    <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 flex flex-col justify-between hover:shadow-lg transition-shadow">
+      <div>
+        <div class="h-48 w-full bg-white p-4 rounded-lg flex items-center justify-center mb-4">
+          <img src="${product.image}" alt="${product.title}" class="h-full object-contain">
         </div>
-        
-        <div class="flex gap-2 mt-3 pt-2 border-t dark:border-gray-700">
-          <a href="product-details.html?id=${p.id}" class="w-1/2 text-center bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-2 rounded text-xs font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition">Details</a>
-          <button data-id="${p.id}" class="add-btn w-1/2 bg-blue-600 text-white py-2 rounded text-xs font-semibold hover:bg-blue-700 transition">Add</button>
-        </div>
+        <span class="text-xs uppercase tracking-wider text-blue-600 dark:text-blue-400 font-semibold">${product.category}</span>
+        <h3 class="font-bold text-gray-800 dark:text-gray-100 text-base my-2 line-clamp-2" title="${product.title}">${product.title}</h3>
+        <p class="text-xl font-extrabold text-blue-600 dark:text-blue-400 mb-4">$${product.price.toFixed(2)}</p>
+      </div>      
+      <div class="flex flex-col gap-1 pt-2 border-t border-gray-100 dark:border-gray-700">
+        <a href="product-details.html?id=${product.id}" 
+           class="w-full text-center py-2 px-4 border border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition font-medium">
+          View Details
+        </a>
+        <button onclick="addToCart(${product.id})" 
+                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-medium active:scale-95">
+          Add to Cart
+        </button>
       </div>
     </div>
   `).join('');
-
-  document.querySelectorAll('.add-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => addToCart(parseInt(e.target.dataset.id)));
-  });
 }
-
-function populateCategories(items) {
-  const select = document.getElementById('category-filter');
-  const categories = [...new Set(items.map(p => p.category))];
-  categories.forEach(cat => {
-    const opt = document.createElement('option');
-    opt.value = cat;
-    opt.textContent = cat.toUpperCase();
-    select.appendChild(opt);
-  });
+function filterAndSortProducts() {
+  let filtered = [...products];
+  const selectedCategory = categoryFilter ? categoryFilter.value : 'all';
+  if (selectedCategory !== 'all') {
+    filtered = filtered.filter(p => p.category === selectedCategory);
+  }
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+  if (query) {
+    filtered = filtered.filter(p => p.title.toLowerCase().includes(query));
+  }
+  const sortValue = sortSelect ? sortSelect.value : 'default';
+  if (sortValue === 'low-to-high') {
+    filtered.sort((a, b) => a.price - b.price);
+  } else if (sortValue === 'high-to-low') {
+    filtered.sort((a, b) => b.price - a.price);
+  }
+  renderProducts(filtered);
 }
-
-function debounce(fn, delay = 300) {
+function debounce(func, delay = 300) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
-    timer = setTimeout(() => fn(...args), delay);
+    timer = setTimeout(() => func(...args), delay);
   };
 }
-
-const handleFilter = () => {
-  const searchVal = document.getElementById('search-input').value.toLowerCase();
-  const catVal = document.getElementById('category-filter').value;
-
-  const filtered = products.filter(p => {
-    const matchesSearch = p.title.toLowerCase().includes(searchVal);
-    const matchesCat = catVal === 'all' || p.category === catVal;
-    return matchesSearch && matchesCat;
-  });
-
-  renderProducts(filtered);
-};
-
-document.getElementById('search-input').addEventListener('input', debounce(handleFilter, 300));
-document.getElementById('category-filter').addEventListener('change', handleFilter);
-
-function addToCart(id) {
+if (searchInput) searchInput.addEventListener('input', debounce(filterAndSortProducts, 300));
+if (categoryFilter) categoryFilter.addEventListener('change', filterAndSortProducts);
+if (sortSelect) sortSelect.addEventListener('change', filterAndSortProducts);
+window.addToCart = function(id) {
   const item = products.find(p => p.id === id);
-  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  const existing = cart.find(x => x.id === id);
-
-  if (existing) {
-    existing.quantity += 1;
+  if (!item) return;
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const existingIndex = cart.findIndex(c => c.id === id);
+  if (existingIndex > -1) {
+    cart[existingIndex].quantity += 1;
   } else {
-    cart.push({ ...item, quantity: 1 });
+    cart.push({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      image: item.image,
+      quantity: 1
+    });
   }
-
   localStorage.setItem('cart', JSON.stringify(cart));
-  updateCartCount();
-}
-
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  const total = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const countEl = document.getElementById('cart-count');
-  if (countEl) countEl.textContent = total;
-}
+  alert(`"${item.title.substring(0, 25)}..." added to cart!`);
+};
+fetchProducts();

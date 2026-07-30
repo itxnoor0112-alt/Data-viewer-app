@@ -6,7 +6,6 @@ export function initTheme() {
     document.documentElement.classList.remove('dark');
   }
 }
-
 export function setupThemeToggle(buttonId) {
   const toggleBtn = document.getElementById(buttonId);
   if (!toggleBtn) return;
