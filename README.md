@@ -73,13 +73,7 @@ dynamic-data-viewer/
 git clone https://github.com/itxnoor0112-alt/Data-viewer-app
 
 ### Open the Project Folder
-cd WEEK 2 DATA-VIEWER
-
-### Install Dependencies
-npm install
-
-### Build Tailwind CSS
-npm run build
+cd Dataviewer-app
 
 ### Open the Project 
 open 'index.html' in your preffered web browser.
