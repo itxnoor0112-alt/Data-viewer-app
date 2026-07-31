@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-Dynamic Data Viewer App is a modern, responsive front-end web application developed using HTML5, CSS3, Tailwind CSS, JavaScript (ES6 Modules), and the FakeStore API. The project features dynamic product loading, debounced search, category filtering, a detailed product view page, a shopping cart system with local storage persistence, and a dark/light mode toggle.
+Dynamic Data Viewer App is a modern, responsive front-end web application developed using HTML5, CSS3, Tailwind CSS, JavaScript (ES6 Modules), and the FakeStore API. Built to fulfill asynchronous UI requirements, the project features dynamic API fetching via a custom HTTP wrapper with retry logic & caching (`sessionStorage`), debounced search, category filtering, client-side pagination, a product details view, a shopping cart with `localStorage` persistence, dark/light theme toggling, and event delegation.
 
-## Live demo
+## Live Demo
 
 https://itxnoor0112-alt.github.io/Data-viewer-app/
 
@@ -14,6 +14,7 @@ https://itxnoor0112-alt.github.io/Data-viewer-app/
 * CSS3
 * Tailwind CSS
 * JavaScript (ES6 Modules)
+* Web Storage APIs (`localStorage` & `sessionStorage`)
 * FakeStore API
 * Visual Studio Code
 * Git
@@ -21,23 +22,22 @@ https://itxnoor0112-alt.github.io/Data-viewer-app/
 
 ## Features
 
-* Responsive design for Mobile, Tablet, and Desktop
-* Semantic HTML5 structure
-* Dynamic API Fetching with Skeleton Loading State
-* Real-time Debounced Search functionality
-* Dynamic Category Filtering
+* Responsive design for Mobile, Tablet, and Desktop using Tailwind CSS
+* Semantic HTML5 structure with dynamic DOM rendering
+* Dynamic API Fetching with Skeleton Loading State and Error Boundary handling
+* Custom HTTP Fetch Wrapper Module with automated 3-attempt retry logic and `sessionStorage` caching (Assignment Task)
+* Real-time Debounced Search functionality with 300ms delay (Assignment Task)
+* Dynamic Category Filtering generated directly from live API data (Assignment Task)
+* Price Sorting (Low to High / High to Low) & Client-side Pagination with 6 items per page (Assignment Task)
+* Optimized DOM Manipulation using Event Delegation on parent grid containers (Assignment Task)
 * Dynamic Product Details page using URL Query Parameters (`?id=X`)
-* Shopping Cart System with LocalStorage persistence
-* Add to Cart & Remove from Cart logic
-* Total Price Calculation (`.toFixed(2)`)
-* Dynamic Cart Badge Counter in Navigation Bar
-* Dark/Light Mode Toggle with saved state in LocalStorage
-* Smooth Transitions & Hover Effects
-* Clean and Modular Code Structure (ES6 Modules)
+* Shopping Cart System with `localStorage` persistence (Add/Remove logic & Cart Badge Counter)
+* Dark/Light Mode Toggle with state persistence in `localStorage`
+* Clean, modular architecture utilizing ES6+ features (Arrow Functions, Destructuring, Spread Operators, Modules)
 
 ## Project Structure
 
-dynamic-data-viewer/
+Data-viewer-app/
 
 │
 
@@ -58,22 +58,24 @@ dynamic-data-viewer/
 │
 
 └── js/
-
+    
     ├── theme.js
-
+    
+    ├── fetchWrapper.js
+    
     ├── main.js
-
+    
     ├── details.js
-
+    
     └── cart.js
 
-## Installation and setup
+## Installation and Setup
 
 ### Clone the Repository
-git clone https://github.com/itxnoor0112-alt/Data-viewer-app
+git clone https://github.com/ibxnoor0112-alt/Data-viewer-app.git
 
 ### Open the Project Folder
-cd Dataviewer-app
+cd Data-viewer-app
 
-### Open the Project 
-open 'index.html' in your preffered web browser.
+### Open the Project
+Open `index.html` directly in your preferred web browser (or run via VS Code Live Server).

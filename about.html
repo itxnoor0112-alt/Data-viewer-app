@@ -1,78 +1,128 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dynamic Data Viewer - About</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <link rel="stylesheet" href="./css/style.css">
+  <script src="js/theme.js"></script>
 </head>
-<body class="bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen flex flex-col md:flex-row">
-  <div class="md:hidden flex justify-between items-center bg-white dark:bg-gray-800 p-4 shadow-md sticky top-0 z-30">
-    <h2 class="text-xl font-bold text-blue-600 dark:text-blue-400">DataViewer</h2>
-    <button id="mobile-menu-btn" class="p-2 text-2xl text-gray-700 dark:text-gray-200">☰</button>
-  </div>
-  <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"></div>
-  <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 shadow-lg h-screen p-4 fixed top-0 left-0 z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col justify-between overflow-y-auto">
-    <div>
-      <div class="flex justify-between items-center mb-8 p-2">
-        <h2 class="text-xl font-bold text-blue-600 dark:text-blue-400">Dashboard</h2>
-        <button id="close-sidebar-btn" class="md:hidden text-gray-500 text-xl font-bold">&times;</button>
-      </div>     
-      <nav class="flex flex-col gap-2">
-        <a href="index.html" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-          🏠 <span>Home</span>
-        </a>
-        <a href="cart.html" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-          🛒 <span>My Cart (<span id="sidebar-cart-count">0</span>)</span>
-        </a>
-        <a href="about.html" class="flex items-center gap-3 p-3 rounded-lg bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-blue-400 font-semibold">
-          ℹ️ <span>About</span>
-        </a>
-      </nav>
-    </div>
-  </aside>
-  <div class="flex-1 md:ml-64 p-4 md:p-6">
-    <div class="hidden md:flex justify-end max-w-4xl mx-auto mb-4">
-      <button id="theme-toggle" class="p-2 border rounded-lg bg-white dark:bg-gray-800 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-sm">🌙/☀️</button>
-    </div>
-    <div class="flex md:hidden justify-end mb-4">
-      <button id="theme-toggle-mobile" class="p-2 border rounded-lg bg-white dark:bg-gray-800 shadow-sm">🌙/☀️</button>
-    </div>
-    <main class="max-w-4xl mx-auto">
-      <div class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl shadow border border-gray-100 dark:border-gray-700 space-y-6">
-        <div>
-          <h1 class="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400 mb-3">About Dynamic Data Viewer</h1>
-          <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-            Dynamic Data Viewer is an interactive web application designed to fetch, display, and manage real-time dynamic data feeds asynchronously using modern Vanilla JavaScript (ES6+) and public REST APIs.
-          </p>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 min-h-screen">
+  <div class="flex min-h-screen relative">
+    <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+    <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 p-6 fixed md:static inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col justify-between">
+      <div>
+        <div class="flex justify-between items-center mb-8 md:hidden">
+          <h2 class="text-xl font-bold text-blue-600 dark:text-blue-400">Dashboard</h2>
+          <button id="close-drawer-btn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white text-xl font-bold">
+            &times;
+          </button>
         </div>
-        <hr class="border-gray-200 dark:border-gray-700">
-        <div>
-          <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Core Technical Features</h2>         
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
-              <h3 class="font-bold text-blue-600 dark:text-blue-400 mb-1">⚡ Dynamic Data & Async API</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300">Fetches live API data feeds with interactive loading skeletons and error handling.</p>
-            </div>
-            <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
-              <h3 class="font-bold text-blue-600 dark:text-blue-400 mb-1">🔍 Debounced Search & Sorting</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300">Client-side debounced search input, category filters, and price sorting.</p>
-            </div>
-            <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
-              <h3 class="font-bold text-blue-600 dark:text-blue-400 mb-1">💾 LocalStorage Cart Workflow</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300">Shopping cart state management, quantity adjustment, subtotal calculation, and instant alerts.</p>
-            </div>
-            <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
-              <h3 class="font-bold text-blue-600 dark:text-blue-400 mb-1">🎨 Dark Mode & Responsive UI</h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300">Tailwind CSS styled with auto-responsive mobile hamburger navigation and theme toggle.</p>
-            </div>
+        <h2 class="text-xl font-bold text-blue-600 dark:text-blue-400 mb-8 hidden md:block">Dashboard</h2>
+        <nav class="space-y-4">
+          <a href="index.html" class="flex items-center gap-3 font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 px-3 rounded-lg transition">
+            <span>🏠</span> Home
+          </a>
+          <a href="cart.html" class="flex items-center gap-3 font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2 px-3 rounded-lg transition">
+            <span>🛒</span> My Cart (<span id="cart-badge">0</span>)
+          </a>
+          <a href="about.html" class="flex items-center gap-3 font-semibold text-blue-600 dark:text-blue-400 py-2 px-3 rounded-lg bg-blue-50 dark:bg-gray-700">
+            <span>ℹ️</span> About
+          </a>
+        </nav>
+      </div>
+    </aside>
+    <main class="flex-1 p-6 md:p-8 w-full">
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center gap-3">
+          <button id="open-drawer-btn" class="md:hidden text-gray-700 dark:text-gray-200 focus:outline-none p-1">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">DataViewer</h1>
+        </div>
+        <button id="theme-toggle-btn" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition text-lg" title="Toggle Light/Dark Theme">
+          🌙 / ☀️
+        </button>
+      </div>
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-4">
+          About Dynamic Data Viewer
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed mb-8">
+          Dynamic Data Viewer is an interactive web application designed to fetch, display, and manage real-time dynamic data feeds asynchronously using modern Vanilla JavaScript (ES6+) and public REST APIs.
+        </p>
+        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+          Core Technical Features
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h4 class="text-md font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2 mb-2">
+              ⚡ Dynamic Data & Custom Fetch Wrapper
+            </h4>
+            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+              Fetches live API feeds with custom retry logic, interactive loading skeletons, and error boundary handling.
+            </p>
+          </div>
+          <div>
+            <h4 class="text-md font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2 mb-2">
+              🔍 Debounced Search & Sorting
+            </h4>
+            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+              Client-side debounced search input (300ms delay), dynamic category filters, and price sorting.
+            </p>
+          </div>
+          <div>
+            <h4 class="text-md font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2 mb-2">
+              💾 Caching & Pagination Workflow
+            </h4>
+            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+              SessionStorage API data caching, client-side pagination (8 items/page), and LocalStorage cart state management.
+            </p>
+          </div>
+          <div>
+            <h4 class="text-md font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2 mb-2">
+              🎨 Dark Mode & Event Delegation
+            </h4>
+            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+              Tailwind CSS styled with auto-responsive mobile hamburger navigation, theme toggle, and event delegation.
+            </p>
           </div>
         </div>
       </div>
     </main>
   </div>
-  <script type="module" src="./js/main.js"></script>
+  <script>
+    const openDrawerBtn = document.getElementById('open-drawer-btn');
+    const closeDrawerBtn = document.getElementById('close-drawer-btn');
+    const sidebar = document.getElementById('sidebar');
+    const mobileOverlay = document.getElementById('mobile-overlay');
+    if (openDrawerBtn) openDrawerBtn.addEventListener('click', () => {
+      sidebar.classList.remove('-translate-x-full');
+      mobileOverlay.classList.remove('hidden');
+    });
+    if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', () => {
+      sidebar.classList.add('-translate-x-full');
+      mobileOverlay.classList.add('hidden');
+    });
+    if (mobileOverlay) mobileOverlay.addEventListener('click', () => {
+      sidebar.classList.add('-translate-x-full');
+      mobileOverlay.classList.add('hidden');
+    });
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    }
+    const cartBadge = document.getElementById('cart-badge');
+    if (cartBadge) {
+      const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      cartBadge.textContent = totalCount;
+    }
+  </script>
 </body>
 </html>
