@@ -25,13 +25,13 @@ https://itxnoor0112-alt.github.io/Data-viewer-app/
 * Responsive design for Mobile, Tablet, and Desktop using Tailwind CSS
 * Semantic HTML5 structure with dynamic DOM rendering
 * Dynamic API Fetching with Skeleton Loading State and Error Boundary handling
-* Custom HTTP Fetch Wrapper Module with automated 3-attempt retry logic and `sessionStorage` caching (Assignment Task)
-* Real-time Debounced Search functionality with 300ms delay (Assignment Task)
-* Dynamic Category Filtering generated directly from live API data (Assignment Task)
-* Price Sorting (Low to High / High to Low) & Client-side Pagination with 6 items per page (Assignment Task)
-* Optimized DOM Manipulation using Event Delegation on parent grid containers (Assignment Task)
+* Custom HTTP Fetch Wrapper Module with automated 3-attempt retry logic and `sessionStorage` caching 
+* Real-time Debounced Search functionality with 300ms delay 
+* Dynamic Category Filtering generated directly from live API data 
+* Price Sorting (Low to High / High to Low) & Client-side Pagination with 6 items per page 
+* Optimized DOM Manipulation using Event Delegation on parent grid containers 
 * Dynamic Product Details page using URL Query Parameters (`?id=X`)
-* Shopping Cart System with `localStorage` persistence (Add/Remove logic & Cart Badge Counter)
+* Shopping Cart System with `localStorage` persistence 
 * Dark/Light Mode Toggle with state persistence in `localStorage`
 * Clean, modular architecture utilizing ES6+ features (Arrow Functions, Destructuring, Spread Operators, Modules)
 
@@ -60,8 +60,6 @@ Data-viewer-app/
 └── js/
     
     ├── theme.js
-    
-    ├── fetchWrapper.js
     
     ├── main.js
     
