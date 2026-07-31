@@ -66,3 +66,20 @@ dynamic-data-viewer/
     ├── details.js
 
     └── cart.js
+
+## Installation and setup
+
+### Clone the Repository
+git clone https://github.com/itxnoor0112-alt/Data-viewer-app
+
+### Open the Project Folder
+cd WEEK 2 DATA-VIEWER
+
+### Install Dependencies
+npm install
+
+### Build Tailwind CSS
+npm run build
+
+### Open the Project 
+open 'index.html' in your preffered web browser.
